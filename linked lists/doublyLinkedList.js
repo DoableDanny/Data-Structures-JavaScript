@@ -149,6 +149,4 @@ list.push('first');
 list.push('second');
 list.push('third');
 
-console.log(list.remove(55));
-
-// console.log(list);
+console.log(list);
