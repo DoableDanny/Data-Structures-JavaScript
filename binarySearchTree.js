@@ -73,7 +73,6 @@ class BinarySearchTree {
   // Depth-first Search - PreOrder
   DFSPreorder() {
     let data = [];
-    let current = this.root;
 
     // recursive helper function
     function traverse(node) {
@@ -83,7 +82,7 @@ class BinarySearchTree {
       if (node.right) traverse(node.right);
     }
 
-    traverse(current);
+    traverse(this.root);
 
     return data;
   }
