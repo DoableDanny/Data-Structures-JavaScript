@@ -5,7 +5,7 @@ class Node {
   }
 }
 
-// This is implemented as a Min Binary Heap. It's the same as a Max Binary Heap, but with opposite logic (e.g.swap < with >) so the minimum sits at the top.
+// This is implemented as a Min Binary Heap (a heap is a type of tree). It's the same as a Max Binary Heap, but with opposite logic (e.g.swap < with >) so the minimum sits at the top.
 class PriorityQueue {
   constructor() {
     this.values = [];
