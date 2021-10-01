@@ -40,22 +40,69 @@ class Graph {
 
     delete this.adjacencyList[vertex];
   }
+
+  depthFirstRecursive(start) {
+    // If start doesn't exist, return.
+    if (!this.adjacencyList[start]) return null;
+
+    const visited = {};
+    const result = [];
+    // The context of "this" changes inside the helper, so keep a reference to adjacencyList here.
+    const adjacencyList = this.adjacencyList;
+
+    // Immediately invoked recursive helper
+    (function dfs(vertex) {
+      // If vertex has no neighbours, return.
+      if (!adjacencyList[vertex].length) return null;
+
+      visited[vertex] = true;
+
+      result.push(vertex);
+      adjacencyList[vertex].forEach((neighbour) => {
+        if (!visited[neighbour]) {
+          dfs(neighbour);
+        }
+      });
+    })(start);
+
+    return result;
+  }
 }
 
-// Graph to show airline flight routes
 let g = new Graph();
-g.addVertex('Tokyo');
-g.addVertex('Japan');
-g.addVertex('Houston');
-g.addVertex('San Francisco');
 
-g.addEdge('Tokyo', 'Japan');
-g.addEdge('San Francisco', 'Houston');
-g.addEdge('Houston', 'Tokyo');
-g.addEdge('Tokyo', 'Japan');
+g.addVertex('A');
+g.addVertex('B');
+g.addVertex('C');
+g.addVertex('D');
+g.addVertex('E');
+g.addVertex('F');
 
-g.removeEdge('Tokyo', 'Houston');
+g.addEdge('A', 'B');
+g.addEdge('A', 'C');
+g.addEdge('B', 'D');
+g.addEdge('C', 'E');
+g.addEdge('D', 'E');
+g.addEdge('D', 'F');
+g.addEdge('E', 'F');
 
-g.removeVertex('Tokyo');
+//       A
+//      / \
+//     B   C
+//    /     \
+//    D ---- E
+//     \    /
+//        F
 
 console.log(g);
+// The graph is represented by an adjacency list
+// {
+//   A: ['B', 'C'],
+//   B: ['A', 'D'],
+//   C: ['A', 'E'],
+//   D: ['B', 'E', 'F'],
+//   E: ['C', 'D', 'F'],
+//   F: ['D', 'E']
+// }
+
+console.log(g.depthFirstRecursive('A')); // [A', 'B', 'D', 'E', 'C', 'F']
