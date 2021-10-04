@@ -42,7 +42,7 @@ class Graph {
   }
 
   depthFirstRecursive(start) {
-    // If start doesn't exist, return.
+    // If starting vertex doesn't exist, return.
     if (!this.adjacencyList[start]) return null;
 
     const visited = {};
@@ -56,14 +56,60 @@ class Graph {
       if (!adjacencyList[vertex].length) return null;
 
       visited[vertex] = true;
-
       result.push(vertex);
+
       adjacencyList[vertex].forEach((neighbour) => {
         if (!visited[neighbour]) {
           dfs(neighbour);
         }
       });
     })(start);
+
+    return result;
+  }
+
+  depthFirstIterative(start) {
+    if (!this.adjacencyList[start]) return null;
+    const stack = [start];
+    const visited = {};
+    const result = [];
+    let currentVertex;
+
+    visited[start] = true;
+    while (stack.length) {
+      currentVertex = stack.pop();
+      result.push(currentVertex);
+
+      this.adjacencyList[currentVertex].forEach((neighbour) => {
+        if (!visited[neighbour]) {
+          visited[neighbour] = true;
+          stack.push(neighbour);
+        }
+      });
+    }
+
+    return result;
+  }
+
+  breadthFirst(start) {
+    if (!this.adjacencyList[start]) return null;
+    const queue = [start];
+    const visited = {};
+    const result = [];
+    let currentVertex;
+
+    visited[start] = true;
+    while (queue.length) {
+      currentVertex = queue.shift();
+      result.push(currentVertex);
+
+      this.adjacencyList[currentVertex].forEach((neighbour) => {
+        if (!visited[neighbour]) {
+          visited[neighbour] = true;
+          queue.push(neighbour);
+        }
+      });
+    }
 
     return result;
   }
@@ -105,4 +151,8 @@ console.log(g);
 //   F: ['D', 'E']
 // }
 
-console.log(g.depthFirstRecursive('A')); // [A', 'B', 'D', 'E', 'C', 'F']
+console.log(g.depthFirstRecursive('A')); // ['A', 'B', 'D', 'E', 'C', 'F']
+
+console.log(g.depthFirstIterative('A')); // ['A', 'C', 'E', 'F', 'D', 'B']
+
+console.log(g.breadthFirst('A')); // ['A', 'B', 'C', 'D', 'E', 'F']
