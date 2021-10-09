@@ -36,6 +36,7 @@ class WeightedGraph {
   }
 
   Dijkstra(start, finish) {
+    // the node with the shortest distance from start will always be at the front of nodes. This is how we know what to visit next.
     const nodes = new PriorityQueue();
     const distances = {};
     const previous = {};
@@ -67,7 +68,7 @@ class WeightedGraph {
         break;
       }
 
-      // don't think 'smallest' is necessary here - it will always be true?
+      // don't think this conditional is needed at all - smallest will always be true.
       if (smallest || distances[smallest] !== Infinity) {
         for (let neighbour in this.adjacencyList[smallest]) {
           // find neighbouring node
@@ -108,3 +109,4 @@ graph.addEdge('D', 'F', 1);
 graph.addEdge('E', 'F', 1);
 
 console.log(graph.Dijkstra('A', 'E'));
+console.log(graph.myDijkstra('A', 'E'));
