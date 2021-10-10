@@ -1,4 +1,4 @@
-// Simple priority queue implemented with an array
+// Simple priority queue implemented with an array. To improve performance, use the Binary Heap implementation of a priority queue from the `stacks and queues` folder.
 class PriorityQueue {
   constructor() {
     this.values = [];
@@ -36,9 +36,9 @@ class WeightedGraph {
   }
 
   Dijkstra(start, finish) {
-    // the node with the shortest distance from start will always be at the front of nodes. This is how we know what to visit next.
+    // the node with the shortest distance from `start` will always be at the front of nodes. This is how we know what to visit next.
     const nodes = new PriorityQueue();
-    const distances = {};
+    const distances = {}; // distances from `start`
     const previous = {};
     let path = []; // to return at end
     let smallest;
@@ -68,13 +68,14 @@ class WeightedGraph {
         break;
       }
 
-      // don't think this conditional is needed at all - smallest will always be true.
+      // don't think this if-conditional is needed at all - smallest will always be true.
       if (smallest || distances[smallest] !== Infinity) {
         for (let neighbour in this.adjacencyList[smallest]) {
           // find neighbouring node
           let nextNode = this.adjacencyList[smallest][neighbour];
           // calculate new distance to neighbouring node
           let candidate = distances[smallest] + nextNode.weight;
+          // the value of the nextNode, e.g, 'B'
           let nextNeighbour = nextNode.node;
           if (candidate < distances[nextNeighbour]) {
             // updating new smallest distance to neighbour
@@ -109,4 +110,3 @@ graph.addEdge('D', 'F', 1);
 graph.addEdge('E', 'F', 1);
 
 console.log(graph.Dijkstra('A', 'E'));
-console.log(graph.myDijkstra('A', 'E'));
